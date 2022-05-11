@@ -1,4 +1,6 @@
 *.cbp
 *.layout
 *.log
-*.txt
+token.txt
+.vscode/
+build/
