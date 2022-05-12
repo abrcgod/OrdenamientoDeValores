@@ -14,12 +14,12 @@ public:
 
 // Para insertar un nodo en un arbol
 template <class T>
-void insertar(T _valor, Nodo<T>*& _raiz);
+void insertar(T _valor, Nodo<T>* & _raiz);
 
 // Imprime el arbol entero en orden
 template <class T>
-void imprimir(Nodo<T>*& _raiz);
+void imprimir(Nodo<T>* & _raiz);
 
 // Descarga el arbol de la memoria
 template <class T>
-void liberar(Nodo<T>*& _raiz);
+void liberar(Nodo<T>* & _raiz);

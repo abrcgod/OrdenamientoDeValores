@@ -1,16 +1,18 @@
 #include "numero.hpp"
 
+/* Incluye las implementaciones de "bajo nivel" para poder trabajar con el tipo "numero"
+    de una forma más simple dentro del nucleo del proyecto */
+
 #include <cctype>
 #include <iostream>     
 #include <string>
 #include <sstream>
 
+// Funciones auxiliares 
 std::string obtener_parte_entera(std::string& num) {
     int posicionDelPunto = num.find('.');
     std::string parteEntera = num.substr(0, posicionDelPunto);
     
-    std::cout << parteEntera << std::endl;
-
     return parteEntera;
 }
 
@@ -18,8 +20,6 @@ std::string obtener_parte_decimal(std::string& num) {
     int posicionDelPunto = num.find('.');
     std::string parteDecimal = num.substr(posicionDelPunto + 1);
     
-    std::cout << parteDecimal << std::endl;
-
     return parteDecimal;
 }
 
@@ -32,6 +32,7 @@ bool es_negativo(std::string& num) {
 }
    
 
+// Implementa la funcionalidad del operador  < en el tipo numero
 bool numero::operator <(numero& n2) {
     // Comapra primero las partes enteras de los numeros
     std::string parteEnteraN1 = obtener_parte_entera(this->valor);
@@ -84,7 +85,9 @@ bool numero::operator <(numero& n2) {
     return false;
 }
 
+// Implementacion el operador == 
 bool numero::operator ==(numero& n2) {
+    // El metodo compare devuelve 0 si los argumentos son exactamente iguales
     if (this->valor.compare(n2.valor) == 0) {
         return true;
     } else {
@@ -92,7 +95,10 @@ bool numero::operator ==(numero& n2) {
     }
 }
 
+// Implementacion del operador >
 bool numero::operator >(numero& n2) {
+    // Solo necesita invertir la logica de los operadores previos
+    // Ej. A > B si A no es < que A y A no es = B;
     if (!(*this < n2) && !(*this == n2)) {
         return true;
     } else {
@@ -100,12 +106,15 @@ bool numero::operator >(numero& n2) {
     }
 }
 
-int numero::operator =(std::string entrada) {
-    if (isNumber(entrada)) {
+// Operador de asignacion
+void numero::operator =(std::string entrada) {
+    // Modifica el valor de la clase numero a la que se le asigna
+    if (isNumber(entrada)) { // valida que se tenda el formato correcto
         this->valor = entrada;
-        return 0;
+        return;
     } else {
-        return 1;
+        // Si no se valida el valor se mantiene con el default ("\0")
+        return;
     }
 }
 
@@ -131,16 +140,22 @@ bool isNumber(std::string valor) {
     return true;
 }
 
+
+// Implementa los operadores << y >> para trabajar con los metodos cout y cin
 std::ostream& operator <<(std::ostream& COUT, numero& salida) {
-    COUT << salida.valor; 
+    COUT << salida.valor; // cout motrata el valor guardado en la clase
+   
     return COUT;
 }
 
 std::istream& operator >>(std::istream& CIN, numero& entrada) {
-    std::string valor;
-    CIN >> valor;
-    if (isNumber(valor)) {
-        entrada.valor = valor;
+    std::string tmp; // string temporal para guardar el argumento ingresado
+    CIN >> tmp; 
+    // cin guarda el argumento ingredado por consola en la clase
+    // tambien hace un llamado a la funcion de validadcion
+    if (isNumber(tmp)) {
+        entrada.valor = tmp;
     }
+    
     return CIN;
 }
