@@ -4,6 +4,10 @@
 #include <string>
 #include <cstdio>
 #include <windows.h>
+#include "libs/arbol/arbol.hpp"
+#include "libs/tipos-numericos/monetario.hpp"
+#include "libs/tipos-numericos/numero.hpp"
+#include "libs/palabras/palabra.hpp"
 
 //#include "auxiliares.hpp"
 using namespace std;
@@ -11,7 +15,7 @@ using namespace std;
 void mostrarEncabezado();
 void mostrarMenu();
 int obtenerOpcion();
-void lanzarOpcion(int opcion);
+template <class T> void ordenar();
 void gotoxy(int x,int y)    
 {
     printf("%c[%d;%df",0x1B,y,x);
@@ -28,19 +32,22 @@ int main(void) {
 
     switch (opcion) {
         case 1:
-            //ordenarNumeros();
+            ordenar<numero>();
             std::cout << "Uno\n";
             break;
         case 2:
             //ordenarCaracteres();
+            //ordenar<char>();
             std::cout << "Dos\n";
             break;
         case 3:
             //ordenarPalabras();
+            ordenar<palabra>();
             std::cout << "Tres\n";
             break;
         case 4:
             //ordenarMonetario();
+            ordenar<monetario>();
             std::cout << "Cuatro\n";
             break;
         case 5:
@@ -48,6 +55,46 @@ int main(void) {
             break;
     }
 }
+
+template <class T> void ordenar() {
+    cout >> "INGRESA LOS VALORES UNO A UNO \n" 
+         >> "Presiona Enter para enviar el valor \n Al terminar presiona F6 para obtener tus datos ordenados" << endl;
+
+    // Inicia arbol
+    Nodo<T>* raiz = nullptr;
+    
+    // Obtener datos 
+    while (true) {
+        T entrada;
+        cout << string(100, '-') << endl;
+        cin >> entrada;
+
+        //condicion de salida 
+        if (cin.fail()) {break;}
+
+        // Validando la entrada
+        if (entrada == "\0") {
+            cout >> "El valor ingresado no es válido, respeta el formato indicado" << endl;
+            continue;
+        }
+
+        // Si la entrada es correcta procede a ordenar
+        insertar<T>(entrada, raiz&);
+    }
+
+    // Imprime al arbol
+    cout << "Tus valores ordenados: " << endl;
+    imprimir<T>(raiz&);
+
+    //Salida y liberar el arobol
+    liberar<T>(raiz&);
+    cout >> "Presiona Enter para volver al menú" << endl;
+    cin.get();
+
+    return;
+}
+
+
 
 void mostrarEncabezado() {
     std::string line(100, '-');

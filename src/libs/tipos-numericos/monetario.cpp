@@ -4,7 +4,7 @@
 #include <iostream>     
 #include <string>
 
-int monetario::operator =(std::string in) {
+void monetario::operator =(std::string in) {
     if (es_monetario(in)) {
         this->valor = transformar_a_numero(in);
     }
@@ -57,6 +57,7 @@ bool es_monetario(std::string valor) {
             return false;
         }
     }
+    return true;
 }
 
 std::ostream& operator <<(std::ostream& COUT, monetario& salida) {

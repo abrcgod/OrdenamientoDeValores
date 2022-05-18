@@ -9,7 +9,7 @@ class monetario {
     public:
         numero valor;
         monetario(std::string valor = "\0") : valor(valor) {}
-        int operator =(std::string in);
+        void operator =(std::string in);
         bool operator <(monetario& n2);
         bool operator ==(monetario& n2);
         bool operator >(monetario& n2);
