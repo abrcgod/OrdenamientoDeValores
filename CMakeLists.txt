@@ -11,8 +11,6 @@ add_library(
     tipos-numericos
     src/libs/tipos-numericos/numero.hpp
     src/libs/tipos-numericos/numero.cpp
-    src/libs/tipos-numericos/monetario.hpp
-    src/libs/tipos-numericos/monetario.cpp
 )
 
 add_library (
@@ -21,13 +19,6 @@ add_library (
     src/libs/palabras/palabra.cpp
 )
 
-add_library(
-    arbol
-    src/libs/arbol/arbol.hpp
-    src/libs/arbol/arbol.cpp
-    src/libs/arbol/nodo.cpp
-)
-
 add_executable(OrdenamientoDeValores src/main.cpp)
 
-target_link_libraries(OrdenamientoDeValores PRIVATE arbol tipos-numericos palabras)
+target_link_libraries(OrdenamientoDeValores PRIVATE tipos-numericos palabras)

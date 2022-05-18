@@ -4,8 +4,6 @@
 #include <string>
 #include <cstdio>
 #include <windows.h>
-#include "libs/arbol/arbol.hpp"
-#include "libs/tipos-numericos/monetario.hpp"
 #include "libs/tipos-numericos/numero.hpp"
 #include "libs/palabras/palabra.hpp"
 
@@ -15,7 +13,10 @@ using namespace std;
 void mostrarEncabezado();
 void mostrarMenu();
 int obtenerOpcion();
-template <class T> void ordenar();
+int obtener_cantidad_datos();
+template <class T> void obtener_datos(T* arr, int size);
+template <class T> void bubble_sort(T arr[], int n);
+template <class T> void print(T arr[], int size);
 void gotoxy(int x,int y)    
 {
     printf("%c[%d;%df",0x1B,y,x);
@@ -24,76 +25,123 @@ void gotoxy(int x,int y)
 int main(void) {
     system("cls");
     mostrarEncabezado();
-
-    system("cls");
-    mostrarMenu();
-
-    int opcion = obtenerOpcion();
-
-    switch (opcion) {
-        case 1:
-            ordenar<numero>();
-            std::cout << "Uno\n";
-            break;
-        case 2:
-            //ordenarCaracteres();
-            //ordenar<char>();
-            std::cout << "Dos\n";
-            break;
-        case 3:
-            //ordenarPalabras();
-            ordenar<palabra>();
-            std::cout << "Tres\n";
-            break;
-        case 4:
-            //ordenarMonetario();
-            ordenar<monetario>();
-            std::cout << "Cuatro\n";
-            break;
-        case 5:
-            std::cout <<"Salida\n";
-            break;
-    }
-}
-
-template <class T> void ordenar() {
-    cout >> "INGRESA LOS VALORES UNO A UNO \n" 
-         >> "Presiona Enter para enviar el valor \n Al terminar presiona F6 para obtener tus datos ordenados" << endl;
-
-    // Inicia arbol
-    Nodo<T>* raiz = nullptr;
     
-    // Obtener datos 
     while (true) {
-        T entrada;
-        cout << string(100, '-') << endl;
-        cin >> entrada;
+        system("cls");
+        mostrarMenu();
 
-        //condicion de salida 
-        if (cin.fail()) {break;}
+        int opcion = obtenerOpcion();
 
-        // Validando la entrada
-        if (entrada == "\0") {
-            cout >> "El valor ingresado no es válido, respeta el formato indicado" << endl;
+        if (opcion == 1) {
+            int cant_datos = obtener_cantidad_datos();
+            numero arr_numeros[cant_datos];
+            obtener_datos<numero>(arr_numeros, cant_datos);
+            bubble_sort(arr_numeros, cant_datos);
+            print(arr_numeros, cant_datos);
+            goto CONTINUA;
+        } else if (opcion == 2) {
+            int cant_datos = obtener_cantidad_datos();
+            char arr_char[cant_datos];
+            obtener_datos<char>(arr_char, cant_datos);
+            bubble_sort(arr_char, cant_datos);
+            print(arr_char, cant_datos);
+            goto CONTINUA;
+        } else if (opcion == 3) {
+            int cant_datos = obtener_cantidad_datos();
+            palabra arr_palabras[cant_datos];
+            obtener_datos<palabra>(arr_palabras, cant_datos);
+            bubble_sort(arr_palabras, cant_datos);
+            print(arr_palabras, cant_datos);
+            goto CONTINUA;
+        } else if (opcion == 4) {
+            goto SALIDA;
+        }
+    CONTINUA:
+        cout << "Presiona Enter para volver al menú" << endl;
+        cin.ignore();
+        cin.get();
+        continue;
+    SALIDA:
+        cout << "Gracias por usar el programa :)\n"
+             << "Presiona Enter para salir" << endl;
+             cin.ignore();
+             cin.get();
+        break;
+    }
+
+    return 0;
+}
+int obtener_cantidad_datos() {
+    int cant_datos;
+    while (true) {
+        cout << "¿Cuantos datos quiere ingresar? ";
+        cin >> cant_datos;
+        
+        if (cin.fail()) {
+            cout << "Ingrese una cantidad numérica entera" << endl;
             continue;
         }
 
-        // Si la entrada es correcta procede a ordenar
-        insertar<T>(entrada, raiz&);
+        break;
     }
 
-    // Imprime al arbol
-    cout << "Tus valores ordenados: " << endl;
-    imprimir<T>(raiz&);
+    return cant_datos;
+}
 
-    //Salida y liberar el arobol
-    liberar<T>(raiz&);
-    cout >> "Presiona Enter para volver al menú" << endl;
-    cin.get();
+template <class T> void obtener_datos(T* arr, int size) {
+
+    cout << "Ingresa los datos uno por uno, presiona Enter para enviar cada dato" << endl;
+    for (int i = 0; i < size; i++) {
+        cout << string(100, '_') << endl;
+        while (true) {
+            cout << "Dato " << i + 1 << ": ";
+            cin >> arr[i];
+
+            if (cin.fail()) {
+                cout << "Formato invalido, respeta el formato seleccionado" << endl;
+                cout << "Presiona Enter para volver a ingresar el dato" << endl;
+                cin.ignore();
+                cin.get();
+                continue;
+            }
+
+            break;
+        }
+    }
 
     return;
 }
 
+template <class T> void bubble_sort(T arr[], int n) {
+   int i, j;
+   bool swapped;
+   for (i = 0; i < n-1; i++)
+   {
+     swapped = false;
+     for (j = 0; j < n-i-1; j++)
+     {
+        if (arr[j] > arr[j+1])
+        {
+           swap(arr[j], arr[j+1]);
+           swapped = true;
+        }
+     }
+ 
+     // IF no two elements were swapped
+     // by inner loop, then break
+     if (swapped == false)
+        break;
+   }
+}
+ 
+template <class T> void print(T arr[], int size) {
+    system("cls");
+    cout << "Tus datos ordenados: " << endl;
+    for (int i = 0; i < size; i++) {
+        cout << string(100, '_') << endl;
+        cout << i + 1 << ".- " << arr[i] << endl;
+    }
+}
 
 
 void mostrarEncabezado() {
@@ -131,9 +179,8 @@ void mostrarMenu() {
               << char(204) << string(3, separadorV) << separadorHC << string(12, separadorV) << separadorHC << endl
               << char(204) << setw(3) << " 3 " << separadorH << setw(12) << " Palabras   " << separadorH << endl
               << char(204) << string(3, separadorV) << separadorHC << string(12, separadorV) << separadorHC << endl
-              << char(204) << setw(3) << " 4 " << separadorH << setw(12) << " Monetario  " << separadorH << endl
+              << char(204) << setw(3) << " 4 " << separadorH << setw(12) << " Salida  " << separadorH << endl
               << char(204) << string(3, separadorV) << separadorHC << string(12, separadorV) << separadorHC << endl
-              << char(204) << setw(3) << " 5 " << separadorH << setw(12) << " Salir      " << separadorH << endl
               << char(200) << string(3, char(205)) << char(202) << string(12, char(205)) << char(202)
 			   << string(99 - 18, char(205)) << char(188) << endl;
     return;

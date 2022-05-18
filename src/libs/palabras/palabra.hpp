@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 
 class palabra {
@@ -7,6 +9,7 @@ class palabra {
         void operator =(std::string in);
         bool operator <(palabra& n2);
         bool operator ==(palabra& n2);
+        bool operator ==(std::string& compare);
         bool operator >(palabra& n2);
 };
 

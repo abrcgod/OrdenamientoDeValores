@@ -94,7 +94,14 @@ bool numero::operator ==(numero& n2) {
         return false;
     }
 }
-
+bool numero::operator ==(std::string& compare) {
+    if (this->valor.compare(compare) == 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 // Implementacion del operador >
 bool numero::operator >(numero& n2) {
     // Solo necesita invertir la logica de los operadores previos
@@ -153,8 +160,17 @@ std::istream& operator >>(std::istream& CIN, numero& entrada) {
     CIN >> tmp; 
     // cin guarda el argumento ingredado por consola en la clase
     // tambien hace un llamado a la funcion de validadcion
-    if (isNumber(tmp)) {
-        entrada.valor = tmp;
+    while (true) {
+        if (isNumber(tmp)) {
+            entrada.valor = tmp;
+            break;
+        } else {
+            std::cout << "Valor invalido" << std::endl;
+            std::cout << "Reingreas un valor valido: ";
+
+             CIN >> tmp;
+             continue;
+        }
     }
     
     return CIN;
