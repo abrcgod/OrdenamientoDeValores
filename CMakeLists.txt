@@ -1,9 +1,10 @@
 # Instrucciones de compilación. Se necesita instalar cmake, make y un compilador
 # se compiló con g++ por lo que la compatibilidad con otros no está garantizada
 # En un terminal crear, sobre este directorio, un directorio llamado build 
-# luego ejecutar cmake --config para preparar el compilador
-# Finalmente para compilar usar cmake --build
+# luego ejecutar "cmake" para preparar el compilador
+# Finalmente para compilar usar "cmake --build build"
 # El ejecutable se encuentra en la carpeta build.
+
 cmake_minimum_required(VERSION 3.23.1)
 project(OrdenamientoDeValores VERSION 1.0.0)
 

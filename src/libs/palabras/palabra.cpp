@@ -67,7 +67,7 @@ std::istream& operator >>(std::istream& CIN, palabra& entrada) {
             break;
         } else {
             std::cout << "Valor invalido" << std::endl;
-            std::cout << "Reingreas un valor valido: ";
+            std::cout << "Reingresa un valor valido: ";
 
              CIN >> in;
              continue;
