@@ -41,40 +41,36 @@ bool numero::operator <(numero& n2) {
     int parteEnteraN2_i = stoi(parteEnteraN2);
 
     if (parteEnteraN1_i < parteEnteraN2_i) {
-        // Cuando se comparan dos numeros negativos la lógica se invierte:
-        // Lo mismo sucede en otros bloques de codigo mas adelante
-        if (es_negativo(this->valor) && es_negativo(n2.valor)) {
-                return false;
-            } else {
-                return true;
-            }
+        return true;
     } else if (parteEnteraN1_i > parteEnteraN2_i) {
-        if (es_negativo(this->valor) && es_negativo(n2.valor)) {
-                return true;
-            } else {
-                return false;
-            }
+        return false;
     } else {
         // Cuando las partes enteras son iguales compara la parte decimal
         std::string parteDecimalN1 = obtener_parte_decimal(this->valor);
         std::string parteDecimalN2 = obtener_parte_decimal(n2.valor);
-        int parteDecimalN1_i = stoi(parteDecimalN1);
-        int parteDecimalN2_i = stoi(parteDecimalN2);
+        
+        // Obtiene iteradoes al inicio de la string para comparar
+        auto digitoDecimalN1 = std::begin(parteDecimalN1);
+        auto digitoDecimalN2 = std::begin(parteDecimalN2);
 
-        if (parteDecimalN1_i < parteDecimalN2_i) {
-            if (es_negativo(this->valor) && es_negativo(n2.valor)) {
-                return false;
+        while (true) {
+            if (*digitoDecimalN1 < *digitoDecimalN2) {
+                if (es_negativo(this->valor) && es_negativo(n2.valor)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else if (*digitoDecimalN1 == *digitoDecimalN2) {
+                digitoDecimalN1++;
+                digitoDecimalN2++;
+                continue;
             } else {
-                return true;
+                 if (es_negativo(this->valor) && es_negativo(n2.valor)) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
-        } else if (parteDecimalN1_i > parteDecimalN2_i) {
-            if (es_negativo(this->valor) && es_negativo(n2.valor)) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
         }
     }
     return false;

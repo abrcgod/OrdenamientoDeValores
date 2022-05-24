@@ -4,8 +4,8 @@
 #include <string>
 #include <windows.h>
 
-#include "libs/tipos-numericos/numero.hpp"
-#include "libs/palabras/palabra.hpp"
+#include "libs/tipos-numericos/numero.cpp"
+#include "libs/palabras/palabra.cpp"
 #include "auxiliares.cpp"
 
 using namespace std;
@@ -18,13 +18,13 @@ template <class T> void print(T arr[], int size);
 
 int main(void) {
     system("cls");
-    mostrarEncabezado();
+    mostrar_portada();
 
     // Bucle principal para que el programa no cierre al terminar de ordenar
     while (true) {
         system("cls");
         
-        mostrarMenu();
+        mostrar_menu();
 
         int opcion = obtenerOpcion();
         
@@ -53,12 +53,12 @@ int main(void) {
         } else if (opcion == 4) {
             goto SALIDA;
         }
-    CONTINUA:
+    CONTINUA: // Despues de cada ordenamiento se continua al menu
         cout << "Presiona Enter para volver al menu" << endl;
         cin.ignore();
         cin.get();
         continue;
-    SALIDA:
+    SALIDA: // Sale del programa en opcion 4
         cout << "\n\nGracias por usar el programa :)\n"
              << "Presiona Enter para salir" << endl;
              cin.ignore();
@@ -90,7 +90,7 @@ MENSAJE: // Se despliega al detectar opciones no validas
         cin.ignore();
         cin.get();
         system("cls");
-        mostrarMenu();
+        mostrar_menu();
         continue;
     }
 }

@@ -5,10 +5,10 @@
 
 using namespace std;
 
-void mostrarEncabezado() {
+void mostrar_portada() {
     std::string line(100, char(196));
     std::string instituto = "INSTITUTO POLITECNICO NACIONAL";
-    std::string escuela = "Unidad Politecnica Interdisciplinaria de Ingenieria y Ciencias Sociales y Administrativas";
+    std::string escuela = "Unidad Profesional Interdisciplinaria de Ingenieria y Ciencias Sociales y Administrativas";
     std::string asignatura = "Logica de programacion";
     std::string proyecto = "Ordenamiento de Valores";
     
@@ -28,7 +28,7 @@ void mostrarEncabezado() {
     return;
 }
 
-void mostrarMenu() {
+void mostrar_menu() {
     string line(98, char(205));
     char separadorV = char(205);
     char separadorH = char(186);
